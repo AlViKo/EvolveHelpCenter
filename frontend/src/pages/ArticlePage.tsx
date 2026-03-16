@@ -57,6 +57,15 @@ function parseVideoEmbed(children: ReactNode): ReactNode | null {
   return null
 }
 
+function ArticleImage({ src, alt }: { src?: string; alt?: string }) {
+  return (
+    <figure className="md-figure">
+      <img src={src} alt={alt || ''} loading="lazy" />
+      {alt && <figcaption>{alt}</figcaption>}
+    </figure>
+  )
+}
+
 function slugify(text: string): string {
   return text
     .toLowerCase()
@@ -128,19 +137,18 @@ export default function ArticlePage() {
     h3: ({ children }: { children?: ReactNode }) => (
       <HeadingRenderer level={3}>{children}</HeadingRenderer>
     ),
-    img: ({ src, alt }: { src?: string; alt?: string }) => (
-      <figure className="md-figure">
-        <img src={src} alt={alt || ''} loading="lazy" />
-        {alt && <figcaption>{alt}</figcaption>}
-      </figure>
-    ),
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    p: ({ children, node }: { children?: ReactNode; node?: any }) => {
+    img: ArticleImage,
+    p: ({ children }: { children?: ReactNode }) => {
       const embed = parseVideoEmbed(children)
       if (embed) return embed
-      // If the paragraph contains only an image, unwrap to avoid
-      // a <figure> nested inside <p> (invalid HTML → empty gap).
-      const hasImage = node?.children?.some((c: any) => c.tagName === 'img')
+      // react-markdown wraps standalone images in <p>. Our img
+      // component returns <figure> (block) — nesting that inside
+      // <p> is invalid HTML, causing browsers to render a gap.
+      // Detect: if any child was rendered by ArticleImage, unwrap.
+      const childArr = Array.isArray(children) ? children : [children]
+      const hasImage = childArr.some(
+        (c) => c != null && typeof c === 'object' && 'type' in c && (c as any).type === ArticleImage
+      )
       if (hasImage) return <>{children}</>
       return <p>{children}</p>
     },

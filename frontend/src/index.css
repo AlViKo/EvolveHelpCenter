@@ -499,6 +499,12 @@ a:hover {
 }
 
 /* ── Article images ──────────────────────────────── */
+/* Collapse any empty <p> that the browser creates when it
+   hoists a <figure> out of an invalid <p><figure>...</p> nesting. */
+.markdown-body p:empty {
+  display: none;
+}
+
 .md-figure {
   margin: 16px 0;
   text-align: center;
