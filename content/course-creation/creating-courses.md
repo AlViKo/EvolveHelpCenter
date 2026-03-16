@@ -19,7 +19,7 @@ updated_at: "2026-03-16"
 last_reviewed_at: "2026-03-16"
 ---
 
-Evolve offers several ways to create courses: **AI-powered generation** from your existing materials, or **manual creation** using the built-in editor, or **Importing SCORM file** in case you need to move from your existing LMS platform. This guide covers both methods, file requirements, and frequently asked questions.
+Evolve offers two ways to create courses: **AI-powered generation** from your existing materials, or **manual creation** using the built-in editor. This guide covers both methods, file requirements, and frequently asked questions.
 
 ## Course Creation Using AI
 
@@ -29,13 +29,19 @@ In the left menu at the very top, your name is displayed. Right under it, you ca
 
 If you see the status "User", you need to switch to the administrator profile. Click the icon with two arrows or the text **Switch to Administrator Profile**.
 
+![User profile showing the "Switch to administrator" button](/images/courses-switch-to-admin.png)
+
 After switching, the admin panel will open, where all platform management functions are available: adding users, managing courses, setting up a company profile, and more.
 
 ### Step 2 — Navigate to course creation
 
 In the left menu, select **Courses**, then click **Create a course** in the upper right corner.
 
+![Top toolbar with the Create course button](/images/courses-create-course-button.png)
+
 In the window that opens, select the option **Build with AI** and press **Select**.
+
+![Course creation methods — select Build with AI](/images/courses-creation-method-ai.png)
 
 ### Step 3 — Complete the course form
 
@@ -45,6 +51,8 @@ Enter all the information about the future course in the form:
 - Target audience
 - Wishes for the format
 - Upload documents or materials on which to base the course
+
+![Materials upload area — drag and drop your files](/images/courses-upload-materials.png)
 
 There is no need to write a prompt — the system already contains built-in templates. Your task is to clearly describe the course objectives and expectations. AI will do the rest.
 
@@ -65,6 +73,8 @@ If you have any questions about the platform or the generation process:
 - Open support chat in the lower right corner
 - Write your question and the team will answer and help you figure it out
 - Or send an email to support@evolveplatform.ai
+
+![Support chat icon in the lower right corner of the platform](/images/courses-support-chat-icon.png)
 
 ## AI Generation: Resources and Limitations
 
@@ -88,11 +98,15 @@ At maximum volumes, this is approximately 400 pages of text, or 500 slides, or u
 
 You can create a new course manually using two options: duplicating an existing course or clicking the **New course** button and selecting **Create manually**.
 
+![Course creation methods — select Create manually](/images/courses-creation-method-manual.png)
+
 ### Duplicating an existing course
 
 1. Go to the **Courses** section.
 2. Choose the desired course and click the three dots in the top right corner.
 3. Select **Duplicate**.
+
+![Course menu — click the three dots and select Duplicate](/images/courses-menu-duplicate.png)
 
 A copy of the course will appear with the type "Manual" — it is not charged to your account. This is convenient if you want to experiment with materials: try different formats, change the order of lessons, or test the structure without affecting the main course.
 
@@ -104,9 +118,13 @@ Once a block is added to your lessons, you can add as many elements as needed. T
 
 By clicking on the **All blocks** button you can see additional controls for making your course more interactive and attractive for your users.
 
+![Editor toolbar — click All blocks to see all available content types](/images/courses-all-blocks-highlighted.png)
+
 ### Flip-cards
 
 One of the useful features available in courses and especially in tests are **flip-cards** — interactive elements that learners can click to reveal additional information.
+
+![Block library showing the flip-card content type](/images/courses-block-library-flipcards.png)
 
 ## What Happens After Generation Starts?
 
@@ -170,6 +188,8 @@ If you forgot to upload materials and the generation process has already started
 ### Can the platform independently find missing course information online?
 
 Yes, you can specify topics you want to search further in the course creation form.
+
+![Field for specifying additional topics to include in the course](/images/courses-additional-topics-field.png)
 
 ### Can the platform create a course without input materials?
 
