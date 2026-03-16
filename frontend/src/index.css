@@ -651,10 +651,6 @@ a:hover {
   max-width: 1080px;
 }
 
-.page-container--with-toc .article-body-wrap {
-  position: relative;
-}
-
 /* ── Table of Contents — shared ──────────────────── */
 .toc-list {
   list-style: none;
@@ -703,20 +699,28 @@ a:hover {
 }
 
 @media (min-width: 960px) {
-  .toc-sidebar {
-    display: block;
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 220px;
-    position: sticky;
-    top: 80px;
-    float: right;
-    margin-left: 40px;
+  .page-container--with-toc .article-body-wrap {
+    display: grid;
+    grid-template-columns: 1fr 220px;
+    gap: 40px;
+    align-items: start;
   }
 
-  .page-container--with-toc .article-body-wrap {
-    max-width: var(--max-width);
+  /* Markdown body and feedback span the left column */
+  .page-container--with-toc .markdown-body,
+  .page-container--with-toc .feedback-widget {
+    grid-column: 1;
+  }
+
+  /* Sidebar in the right column, sticky */
+  .toc-sidebar {
+    display: block;
+    grid-column: 2;
+    grid-row: 1 / 999;
+    position: sticky;
+    top: 80px;
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
   }
 
   .toc-sidebar-title {

@@ -22,11 +22,8 @@ export function extractHeadings(markdown: string): TocEntry[] {
   return entries
 }
 
-const MIN_HEADINGS = 3
-
-export default function TableOfContents({ headings }: { headings: TocEntry[] }) {
+function useActiveHeading(headings: TocEntry[]) {
   const [activeId, setActiveId] = useState<string>('')
-  const [collapsed, setCollapsed] = useState(true)
 
   useEffect(() => {
     const elements = headings
@@ -37,7 +34,6 @@ export default function TableOfContents({ headings }: { headings: TocEntry[] }) 
 
     const observer = new IntersectionObserver(
       (entries) => {
-        // Find the topmost visible heading
         const visible = entries
           .filter((e) => e.isIntersecting)
           .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)
@@ -52,60 +48,56 @@ export default function TableOfContents({ headings }: { headings: TocEntry[] }) 
     return () => observer.disconnect()
   }, [headings])
 
-  if (headings.length < MIN_HEADINGS) return null
+  return activeId
+}
 
-  function handleClick(id: string) {
-    const el = document.getElementById(id)
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' })
-      setActiveId(id)
-      setCollapsed(true)
-    }
-  }
+function handleClick(id: string) {
+  const el = document.getElementById(id)
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+}
+
+function TocList({ headings, activeId }: { headings: TocEntry[]; activeId: string }) {
+  return (
+    <ul className="toc-list">
+      {headings.map((h) => (
+        <li key={h.id} className={`toc-item toc-level-${h.level}`}>
+          <button
+            className={`toc-link ${activeId === h.id ? 'active' : ''}`}
+            onClick={() => handleClick(h.id)}
+          >
+            {h.text}
+          </button>
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+export function TocMobile({ headings }: { headings: TocEntry[] }) {
+  const [collapsed, setCollapsed] = useState(true)
+  const activeId = useActiveHeading(headings)
 
   return (
-    <>
-      {/* Mobile: collapsible block above article */}
-      <nav className="toc-mobile">
-        <button
-          className="toc-mobile-toggle"
-          onClick={() => setCollapsed(!collapsed)}
-        >
-          Table of contents
-          <span className={`toc-chevron ${collapsed ? '' : 'open'}`}>&#9662;</span>
-        </button>
-        {!collapsed && (
-          <ul className="toc-list">
-            {headings.map((h) => (
-              <li key={h.id} className={`toc-item toc-level-${h.level}`}>
-                <button
-                  className={`toc-link ${activeId === h.id ? 'active' : ''}`}
-                  onClick={() => handleClick(h.id)}
-                >
-                  {h.text}
-                </button>
-              </li>
-            ))}
-          </ul>
-        )}
-      </nav>
+    <nav className="toc-mobile">
+      <button
+        className="toc-mobile-toggle"
+        onClick={() => setCollapsed(!collapsed)}
+      >
+        Table of contents
+        <span className={`toc-chevron ${collapsed ? '' : 'open'}`}>&#9662;</span>
+      </button>
+      {!collapsed && <TocList headings={headings} activeId={activeId} />}
+    </nav>
+  )
+}
 
-      {/* Desktop: sticky sidebar */}
-      <nav className="toc-sidebar">
-        <div className="toc-sidebar-title">Table of contents</div>
-        <ul className="toc-list">
-          {headings.map((h) => (
-            <li key={h.id} className={`toc-item toc-level-${h.level}`}>
-              <button
-                className={`toc-link ${activeId === h.id ? 'active' : ''}`}
-                onClick={() => handleClick(h.id)}
-              >
-                {h.text}
-              </button>
-            </li>
-          ))}
-        </ul>
-      </nav>
-    </>
+export function TocSidebar({ headings }: { headings: TocEntry[] }) {
+  const activeId = useActiveHeading(headings)
+
+  return (
+    <nav className="toc-sidebar">
+      <div className="toc-sidebar-title">Table of contents</div>
+      <TocList headings={headings} activeId={activeId} />
+    </nav>
   )
 }

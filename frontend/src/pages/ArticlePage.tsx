@@ -6,7 +6,7 @@ import { ThumbsUp, ThumbsDown } from 'lucide-react'
 import { fetchArticle } from '../api.ts'
 import type { ArticleDetail } from '../types.ts'
 import PageSearchBar from '../components/PageSearchBar.tsx'
-import TableOfContents, { extractHeadings } from '../components/TableOfContents.tsx'
+import { TocMobile, TocSidebar, extractHeadings } from '../components/TableOfContents.tsx'
 
 const VIDEO_PATTERNS: [RegExp, (m: RegExpMatchArray) => string][] = [
   [/^https?:\/\/(?:www\.)?youtube\.com\/watch\?v=([a-zA-Z0-9_-]+)/, (m) => `https://www.youtube.com/embed/${m[1]}`],
@@ -175,9 +175,10 @@ export default function ArticlePage() {
         </div>
       </div>
 
-      {hasToc && <TableOfContents headings={headings} />}
+      {hasToc && <TocMobile headings={headings} />}
 
       <div className="article-body-wrap">
+        {hasToc && <TocSidebar headings={headings} />}
         <div className="markdown-body">
           <ReactMarkdown remarkPlugins={[remarkGfm]} components={markdownComponents}>{article.body_markdown}</ReactMarkdown>
         </div>
