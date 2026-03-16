@@ -831,6 +831,39 @@ a:hover {
   font-size: 15px;
 }
 
+/* ── Back to Top ─────────────────────────────────── */
+.back-to-top {
+  position: fixed;
+  bottom: 32px;
+  right: 24px;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: var(--vivid-blue);
+  color: var(--pure-white);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s, transform 0.25s;
+  transform: translateY(8px);
+  z-index: 90;
+}
+
+.back-to-top.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.back-to-top:hover {
+  box-shadow: 0 4px 12px rgba(51, 102, 255, 0.3);
+}
+
 /* ── Responsive ──────────────────────────────────── */
 @media (max-width: 640px) {
   .hero h1 {

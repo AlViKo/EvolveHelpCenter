@@ -1,4 +1,5 @@
 import { Link, Outlet } from 'react-router-dom'
+import BackToTop from './BackToTop.tsx'
 
 export default function Layout() {
   return (
@@ -23,6 +24,7 @@ export default function Layout() {
           </span>
         </div>
       </footer>
+      <BackToTop />
     </>
   )
 }
