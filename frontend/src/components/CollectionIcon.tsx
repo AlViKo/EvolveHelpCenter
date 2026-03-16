@@ -6,6 +6,7 @@ import {
   Rocket,
   BarChart3,
   Lock,
+  BrainCircuit,
   HelpCircle,
 } from 'lucide-react'
 
@@ -17,6 +18,7 @@ const ICON_MAP: Record<string, React.ComponentType<{ size?: number }>> = {
   'rocket': Rocket,
   'bar-chart-3': BarChart3,
   'lock': Lock,
+  'brain-circuit': BrainCircuit,
 }
 
 interface Props {
