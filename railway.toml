@@ -1,5 +1,0 @@
-[build]
-builder = "nixpacks"
-
-[deploy]
-startCommand = "python manage.py migrate --noinput && python manage.py seed_content --content-dir ./content && python manage.py collectstatic --noinput && gunicorn evolve_help.wsgi:application --bind 0.0.0.0:$PORT"
