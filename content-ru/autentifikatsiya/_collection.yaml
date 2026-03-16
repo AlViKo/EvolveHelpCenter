@@ -1,0 +1,6 @@
+title: "Аутентификация"
+slug: "autentifikatsiya"
+description: "Настройка безопасного входа, единого входа (SSO), многофакторной аутентификации и управление доступом к платформе Evolve"
+icon: "shield-check"
+audience: "admin"
+sort_order: 1

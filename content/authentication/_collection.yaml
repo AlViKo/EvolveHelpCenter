@@ -1,0 +1,6 @@
+title: "Authentication"
+slug: "authentication"
+description: "Configure single sign-on, manage user roles, and control access permissions across your Evolve platform."
+icon: "shield-check"
+audience: "admin"
+sort_order: 1
