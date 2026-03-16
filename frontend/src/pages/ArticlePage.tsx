@@ -134,9 +134,14 @@ export default function ArticlePage() {
         {alt && <figcaption>{alt}</figcaption>}
       </figure>
     ),
-    p: ({ children }: { children?: ReactNode }) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    p: ({ children, node }: { children?: ReactNode; node?: any }) => {
       const embed = parseVideoEmbed(children)
       if (embed) return embed
+      // If the paragraph contains only an image, unwrap to avoid
+      // a <figure> nested inside <p> (invalid HTML → empty gap).
+      const hasImage = node?.children?.some((c: any) => c.tagName === 'img')
+      if (hasImage) return <>{children}</>
       return <p>{children}</p>
     },
   }
