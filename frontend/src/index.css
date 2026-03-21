@@ -864,6 +864,27 @@ a:hover {
   box-shadow: 0 4px 12px rgba(51, 102, 255, 0.3);
 }
 
+/* ── RU Brand Overrides ──────────────────────────── */
+/* Applied when data-brand="ru" is set on <html> by ConfigProvider */
+html[data-brand="ru"] {
+  --radius-xl: 24px;
+  --radius-lg: 16px;
+  --radius-md: 12px;
+  --radius-sm: 6px;
+}
+
+html[data-brand="ru"] .hero h1,
+html[data-brand="ru"] .section-title,
+html[data-brand="ru"] .card-title,
+html[data-brand="ru"] .collection-header h1,
+html[data-brand="ru"] .article-header h1,
+html[data-brand="ru"] .search-header h1,
+html[data-brand="ru"] .markdown-body h1,
+html[data-brand="ru"] .markdown-body h2,
+html[data-brand="ru"] .markdown-body h3 {
+  font-family: 'Unbounded', 'Open Sans', sans-serif;
+}
+
 /* ── Responsive ──────────────────────────────────── */
 @media (max-width: 640px) {
   .hero h1 {

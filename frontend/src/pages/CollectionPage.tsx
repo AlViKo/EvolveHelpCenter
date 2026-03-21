@@ -5,8 +5,10 @@ import { fetchCollection } from '../api.ts'
 import type { CollectionDetail } from '../types.ts'
 import CollectionIcon from '../components/CollectionIcon.tsx'
 import PageSearchBar from '../components/PageSearchBar.tsx'
+import { useConfig } from '../config.tsx'
 
 export default function CollectionPage() {
+  const { t } = useConfig()
   const { slug } = useParams<{ slug: string }>()
   const [collection, setCollection] = useState<CollectionDetail | null>(null)
   const [loading, setLoading] = useState(true)
@@ -27,7 +29,7 @@ export default function CollectionPage() {
     <div className="page-container">
       <PageSearchBar />
       <nav className="breadcrumbs">
-        <Link to="/">All Collections</Link>
+        <Link to="/">{t.allCollections}</Link>
         <span className="separator">&gt;</span>
         <span className="current">{collection.title}</span>
       </nav>
@@ -39,12 +41,12 @@ export default function CollectionPage() {
         <h1>{collection.title}</h1>
         <p>{collection.description}</p>
         <div className="meta">
-          {collection.article_count} {collection.article_count === 1 ? 'article' : 'articles'}
+          {collection.article_count} {collection.article_count === 1 ? t.article : t.articles}
         </div>
       </div>
 
       {collection.articles.length === 0 ? (
-        <div className="empty-state">Articles coming soon. Check back later.</div>
+        <div className="empty-state">{t.articlesSoon}</div>
       ) : (
         <ul className="article-list">
           {collection.articles.map((article) => (

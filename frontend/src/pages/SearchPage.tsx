@@ -3,8 +3,10 @@ import { Link, useSearchParams } from 'react-router-dom'
 import { fetchSearch } from '../api.ts'
 import type { SearchResult } from '../types.ts'
 import PageSearchBar from '../components/PageSearchBar.tsx'
+import { useConfig } from '../config.tsx'
 
 export default function SearchPage() {
+  const { t } = useConfig()
   const [searchParams] = useSearchParams()
   const query = searchParams.get('q') ?? ''
   const [results, setResults] = useState<SearchResult[]>([])
@@ -26,22 +28,22 @@ export default function SearchPage() {
     })
   }, [query])
 
-  if (loading) return <div className="loading">Searching...</div>
+  if (loading) return <div className="loading">Loading...</div>
 
   return (
     <div className="page-container">
       <PageSearchBar initial={query} />
       <div className="search-header">
-        <h1>Results for &ldquo;{query}&rdquo;</h1>
+        <h1>{t.searchResults} &ldquo;{query}&rdquo;</h1>
         <div className="count">
-          {count} {count === 1 ? 'article' : 'articles'} found
+          {count} {count === 1 ? t.article : t.articles} {t.found}
         </div>
       </div>
 
       {results.length === 0 ? (
         <div className="empty-state">
-          No results found for &ldquo;{query}&rdquo;. Try different keywords or{' '}
-          <Link to="/">browse all collections</Link>.
+          {t.noResults} &ldquo;{query}&rdquo;. {t.tryDifferent}{' '}
+          <Link to="/">{t.browseAll}</Link>.
         </div>
       ) : (
         <div>

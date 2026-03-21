@@ -1,8 +1,10 @@
 import { useState, type FormEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Search } from 'lucide-react'
+import { useConfig } from '../config.tsx'
 
 export default function PageSearchBar({ initial = '' }: { initial?: string }) {
+  const { t } = useConfig()
   const [q, setQ] = useState(initial)
   const navigate = useNavigate()
 
@@ -19,7 +21,7 @@ export default function PageSearchBar({ initial = '' }: { initial?: string }) {
       <Search size={18} className="page-search-icon" />
       <input
         type="text"
-        placeholder="Search for articles..."
+        placeholder={t.searchPlaceholder}
         value={q}
         onChange={(e) => setQ(e.target.value)}
       />

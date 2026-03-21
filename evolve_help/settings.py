@@ -39,7 +39,12 @@ INSTALLED_APPS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CONTENT_DIR = BASE_DIR / 'content'
+CONTENT_DIR = BASE_DIR / os.environ.get('HELPCENTER_CONTENT_DIR', 'content')
+
+# Help center configuration (exposed via /api/v1/helpcenter/config/)
+HELPCENTER_SITE_TITLE = os.environ.get('HELPCENTER_SITE_TITLE', 'Evolve Help Center')
+HELPCENTER_LOCALE = os.environ.get('HELPCENTER_LOCALE', 'en')
+HELPCENTER_BRAND = os.environ.get('HELPCENTER_BRAND', 'global')
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

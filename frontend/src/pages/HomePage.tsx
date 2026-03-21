@@ -4,8 +4,10 @@ import { Search } from 'lucide-react'
 import { fetchLanding } from '../api.ts'
 import type { CollectionSummary } from '../types.ts'
 import CollectionIcon from '../components/CollectionIcon.tsx'
+import { useConfig } from '../config.tsx'
 
 export default function HomePage() {
+  const { t, site_title } = useConfig()
   const [adminCollections, setAdminCollections] = useState<CollectionSummary[]>([])
   const [userCollections, setUserCollections] = useState<CollectionSummary[]>([])
   const [loading, setLoading] = useState(true)
@@ -33,12 +35,12 @@ export default function HomePage() {
   return (
     <>
       <div className="hero">
-        <h1>Evolve Help Center</h1>
+        <h1>{site_title}</h1>
         <form className="hero-search" onSubmit={handleSearch}>
           <Search size={20} className="hero-search-icon" />
           <input
             type="text"
-            placeholder="Search for articles..."
+            placeholder={t.searchPlaceholder}
             value={q}
             onChange={(e) => setQ(e.target.value)}
           />
@@ -47,7 +49,7 @@ export default function HomePage() {
 
       <div className="content-wrapper">
         <section className="section">
-          <h2 className="section-title">For Administrators</h2>
+          <h2 className="section-title">{t.forAdministrators}</h2>
           <div className="cards-grid">
             {adminCollections.map((c) => (
               <CollectionCard key={c.slug} collection={c} />
@@ -56,7 +58,7 @@ export default function HomePage() {
         </section>
 
         <section className="section">
-          <h2 className="section-title">For Learners</h2>
+          <h2 className="section-title">{t.forLearners}</h2>
           <div className="cards-grid">
             {userCollections.map((c) => (
               <CollectionCard key={c.slug} collection={c} />
@@ -69,6 +71,7 @@ export default function HomePage() {
 }
 
 function CollectionCard({ collection }: { collection: CollectionSummary }) {
+  const { t } = useConfig()
   return (
     <Link to={`/collections/${collection.slug}`} className="card">
       <div className="card-icon">
@@ -77,7 +80,7 @@ function CollectionCard({ collection }: { collection: CollectionSummary }) {
       <div className="card-title">{collection.title}</div>
       <div className="card-description">{collection.description}</div>
       <div className="card-meta">
-        {collection.article_count} {collection.article_count === 1 ? 'article' : 'articles'}
+        {collection.article_count} {collection.article_count === 1 ? t.article : t.articles}
       </div>
     </Link>
   )

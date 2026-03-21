@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db.models import Count, Q
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -118,4 +119,13 @@ def search(request):
         'results': serialized,
         'count': len(serialized),
         'query': query,
+    })
+
+
+@api_view(['GET'])
+def config(request):
+    return Response({
+        'site_title': settings.HELPCENTER_SITE_TITLE,
+        'locale': settings.HELPCENTER_LOCALE,
+        'brand': settings.HELPCENTER_BRAND,
     })

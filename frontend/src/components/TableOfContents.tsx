@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useConfig } from '../config.tsx'
 
 export interface TocEntry {
   id: string
@@ -74,6 +75,7 @@ function TocList({ headings, activeId }: { headings: TocEntry[]; activeId: strin
 }
 
 export function TocMobile({ headings }: { headings: TocEntry[] }) {
+  const { t } = useConfig()
   const [collapsed, setCollapsed] = useState(true)
   const activeId = useActiveHeading(headings)
 
@@ -83,7 +85,7 @@ export function TocMobile({ headings }: { headings: TocEntry[] }) {
         className="toc-mobile-toggle"
         onClick={() => setCollapsed(!collapsed)}
       >
-        Table of contents
+        {t.tableOfContents}
         <span className={`toc-chevron ${collapsed ? '' : 'open'}`}>&#9662;</span>
       </button>
       {!collapsed && <TocList headings={headings} activeId={activeId} />}
@@ -92,11 +94,12 @@ export function TocMobile({ headings }: { headings: TocEntry[] }) {
 }
 
 export function TocSidebar({ headings }: { headings: TocEntry[] }) {
+  const { t } = useConfig()
   const activeId = useActiveHeading(headings)
 
   return (
     <nav className="toc-sidebar">
-      <div className="toc-sidebar-title">Table of contents</div>
+      <div className="toc-sidebar-title">{t.tableOfContents}</div>
       <TocList headings={headings} activeId={activeId} />
     </nav>
   )

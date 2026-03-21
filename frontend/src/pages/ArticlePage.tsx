@@ -7,6 +7,7 @@ import { fetchArticle } from '../api.ts'
 import type { ArticleDetail } from '../types.ts'
 import PageSearchBar from '../components/PageSearchBar.tsx'
 import { TocMobile, TocSidebar, extractHeadings } from '../components/TableOfContents.tsx'
+import { useConfig } from '../config.tsx'
 
 const VIDEO_PATTERNS: [RegExp, (m: RegExpMatchArray) => string][] = [
   [/^https?:\/\/(?:www\.)?youtube\.com\/watch\?v=([a-zA-Z0-9_-]+)/, (m) => `https://www.youtube.com/embed/${m[1]}`],
@@ -95,6 +96,7 @@ function HeadingRenderer({
 }
 
 export default function ArticlePage() {
+  const { t, locale } = useConfig()
   const { slug, articleSlug } = useParams<{ slug: string; articleSlug: string }>()
   const [article, setArticle] = useState<ArticleDetail | null>(null)
   const [loading, setLoading] = useState(true)
@@ -158,7 +160,7 @@ export default function ArticlePage() {
     <div className={`page-container ${hasToc ? 'page-container--with-toc' : ''}`}>
       <PageSearchBar />
       <nav className="breadcrumbs">
-        <Link to="/">All Collections</Link>
+        <Link to="/">{t.allCollections}</Link>
         <span className="separator">&gt;</span>
         <Link to={`/collections/${article.collection_slug}`}>{article.collection_title}</Link>
         <span className="separator">&gt;</span>
@@ -169,9 +171,9 @@ export default function ArticlePage() {
         <h1>{article.title}</h1>
         <div className="article-meta">
           <span className={badgeClass}>{article.content_type}</span>
-          <span>Written by {article.author}</span>
+          <span>{t.writtenBy} {article.author}</span>
           <span>&middot;</span>
-          <span>Updated on {formatDate(article.updated_at)}</span>
+          <span>{t.updatedOn} {formatDate(article.updated_at, locale)}</span>
         </div>
       </div>
 
@@ -184,19 +186,19 @@ export default function ArticlePage() {
         </div>
 
         <div className="feedback-widget">
-          <p>Did this answer your question?</p>
+          <p>{t.didThisAnswer}</p>
           <div className="feedback-buttons">
             <button
               className={`feedback-btn ${feedback === 'up' ? 'selected' : ''}`}
               onClick={() => setFeedback('up')}
             >
-              <ThumbsUp size={16} /> Yes
+              <ThumbsUp size={16} /> {t.yes}
             </button>
             <button
               className={`feedback-btn ${feedback === 'down' ? 'selected' : ''}`}
               onClick={() => setFeedback('down')}
             >
-              <ThumbsDown size={16} /> No
+              <ThumbsDown size={16} /> {t.no}
             </button>
           </div>
         </div>
@@ -205,7 +207,8 @@ export default function ArticlePage() {
   )
 }
 
-function formatDate(dateStr: string): string {
+function formatDate(dateStr: string, locale: string): string {
   const d = new Date(dateStr + 'T00:00:00')
-  return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+  const loc = locale === 'ru' ? 'ru-RU' : 'en-US'
+  return d.toLocaleDateString(loc, { year: 'numeric', month: 'long', day: 'numeric' })
 }
